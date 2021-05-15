@@ -77,6 +77,20 @@
                      
                     </b-dropdown>
                     </b-form-group>
+                    
+
+                    <b-form-group
+                    label="Tipe Menu"
+                    label-for="tipe-input"
+                    invalid-feedback="Tipe menu tidak boleh kosong"
+                    :state="tipeState"
+                    >
+                    <b-dropdown v-model="tipe_menu" :text="text_tipe" :variant="tipeVariant">
+                        <b-dropdown-item v-for="item in tipe_menu" :key="item" @click="chooseTipe(item)" >{{item}}</b-dropdown-item>
+                     
+                    </b-dropdown>
+                    </b-form-group>
+
                     <b-form-group
                     label="Nama Menu"
                     label-for="nama_menu-input"
@@ -250,6 +264,14 @@ export default {
             ],
             bahans:[
             ],
+            tipe_menu:[
+              'Side Dish',
+              'Main Course',
+              'Drink'
+            ],
+            tipeState:null,
+            text_tipe:'Pilih Tipe',
+            tipeVariant:'light',
 
             toast:false,
             title:'',
@@ -311,6 +333,12 @@ export default {
             this.bahanVariant='outline-danger'
             error=+1
         }
+        if(this.text_tipe=='Pilih Tipe'){
+            this.tipeState = false
+            this.tipeVariant='outline-danger'
+            error=+1
+            
+        }
 
         return error
       },
@@ -331,6 +359,9 @@ export default {
         this.harga_feedback=''
         this.serving_feedback=''
         this.bahanVariant='light'
+        this.tipeState = null
+        this.tipeVariant='light'
+        this.text_tipe='Pilih Tipe'
 
       },
       handleOk(bvModalEvt) {
@@ -349,6 +380,8 @@ export default {
         this.unitState=null
         this.bahanState=null
         this.bahanVariant='light'
+        this.tipeVariant='light'
+        this.tipeState=null
    
         if (this.checkFormValidity()>0) {
           return
@@ -365,6 +398,9 @@ export default {
           this.$bvModal.hide('modal-prevent-closing')
         })
       },
+      chooseTipe(item){
+          this.text_tipe=item
+      },
       editForm(item){
           this.desc_modal='Edit Menu'
           this.nama_menu=item.nama_menu
@@ -375,6 +411,7 @@ export default {
           this.unit=item.unit
           this.searchBahan(item.id_bahan)
           this.id_item=item.id_menu
+          this.text_tipe = item.tipe_menu
           
           if(!item.ketersediaan==1){
               this.ketersediaan=false
@@ -442,6 +479,7 @@ export default {
         this.item = new FormData;
             this.item.append('nama_menu',this.nama_menu);
             this.item.append('deskripsi_menu',this.deskripsi_menu);
+            this.item.append('tipe_menu',this.tipe_text);
             this.item.append('unit',this.unit);
             this.item.append('serving_size',this.serving_size);
             this.item.append('harga_menu',this.harga_menu);
@@ -480,7 +518,8 @@ export default {
         gambar:this.gambar,
         serving_size:this.serving_size,
         id_bahan:this.id_bahan,
-        ketersediaan:available
+        ketersediaan:available,
+        tipe_menu:this.tipe_text
         };
         var url = this.$api + "/update-menu/" + this.id_item;
         this.load = true;

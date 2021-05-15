@@ -14,9 +14,11 @@
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto" >
                 <b-nav-item v-if="isLogedin==authentication" to="/login" style="margin-right:20%">Login</b-nav-item>
-                <b-nav-item-dropdown v-else :text="username" right>
+                <b-nav-item-dropdown v-else :text="`Hi,`+ username " right>
                   <b-dropdown-item to="/profile">Profile</b-dropdown-item>
-                  <b-dropdown-item v-if="jabatan.nama_jabatan=='Operasional Manager'||jabatan.nama_jabatan=='Chef'" to="/jabatan">Dashboard</b-dropdown-item>
+                  <b-dropdown-item v-if="jabatan.nama_jabatan=='Operasional Manager'" to="/jabatan">Dashboard</b-dropdown-item>
+                  <b-dropdown-item v-else-if="jabatan.nama_jabatan=='Chef'" to="/bahan">Dashboard</b-dropdown-item>
+
                   <b-dropdown-item v-else disabled to="/jabatan">Dashboard</b-dropdown-item>
                   <b-dropdown-item @click="logout">Logout<b-icon icon="arrow-bar-right" style="margin-left:10px"></b-icon></b-dropdown-item>
                 </b-nav-item-dropdown>
@@ -88,7 +90,7 @@ export default {
     computed:{
       username(){
          if(this.$user.get().isLogedin==true){
-           return localStorage.getItem('email')
+           return localStorage.getItem('nama')
          }else
             return ''
       },

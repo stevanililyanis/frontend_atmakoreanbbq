@@ -185,11 +185,11 @@ export default {
             deleteModal:false,
             delete_temp:null,
             rows:[
-                {id_bahan:"BHN-1",
-                nama_bahan:"Squid",
-                harga_bahan:"25000",
-                unit:"gram",
-                remaining_stock:"500"}
+                {id_bahan:"",
+                nama_bahan:"",
+                harga_bahan:"",
+                unit:"",
+                remaining_stock:""}
              ],
             fields:[
                  {key:'id_bahan',

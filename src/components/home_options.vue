@@ -13,7 +13,7 @@
         </b-card>
 
         <b-card v-if="jabatan.nama_jabatan=='Operasional Manager'||jabatan.nama_jabatan=='Chef'||jabatan.nama_jabatan=='Waiter'"
-        variant="no-outline" text-variant="grey" class="text-center card1" style="box-shadow: 0 0.7rem 1rem rgba(0, 0, 0, 0.15)">
+        variant="no-outline" @click="to('Pesanan')" text-variant="grey" class="text-center card1" style="box-shadow: 0 0.7rem 1rem rgba(0, 0, 0, 0.15)">
             <img src="../assets/preservation.png" width="40%">
             <b-card-text  style="font-weight:bold;font-size:20px; margin-top:20px">PESANAN</b-card-text>
         </b-card>

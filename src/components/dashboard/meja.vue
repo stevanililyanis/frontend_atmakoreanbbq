@@ -311,10 +311,10 @@ export default {
     },
     filteredRows() {
         return this.rows.filter(row => {
-        const no_meja = row.no_meja.toString().toLowerCase();
-        const searchTerm = this.filter.toString().toLowerCase();
+        const no_meja = row.no_meja?.toString().toLowerCase();
+        const searchTerm = this.filter?.toString().toLowerCase();
 
-        return no_meja.includes(searchTerm);
+        return no_meja?.includes(searchTerm);
     });
     
   },

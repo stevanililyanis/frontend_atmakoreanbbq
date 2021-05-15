@@ -377,12 +377,12 @@ export default {
     computed:{
     filteredRows() {
         return this.rows.filter(row => {
-        const id_customer = row.id_customer.toLowerCase();
-        const nama_customer = row.nama_customer.toLowerCase();
-        const searchTerm = this.filter.toLowerCase();
+        const id_customer = row.id_customer?.toLowerCase();
+        const nama_customer = row.nama_customer?.toLowerCase();
+        const searchTerm = this.filter?.toLowerCase();
 
-        return nama_customer.includes(searchTerm) ||
-            id_customer.includes(searchTerm);
+        return nama_customer?.includes(searchTerm) ||
+            id_customer?.includes(searchTerm);
     });
     
   },

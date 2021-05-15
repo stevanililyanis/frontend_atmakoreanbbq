@@ -39,6 +39,10 @@
                 <b-button variant="no-outline" style="background-color:#EC7309;" class="iconEdit" @click="editForm(filteredRows.item)" v-b-modal.modal-center>
                 <b-icon style="color:white" icon="pencil-fill"></b-icon>
                 </b-button>
+
+                 <b-button style="margin-left:5px" variant="outline-danger" class="iconDelete" @click="deleteItem(filteredRows.item)" v-b-modal.modal-delete>
+                <b-icon icon="X"></b-icon>
+                </b-button>  
             </template>
 
             </b-table> 
@@ -167,7 +171,22 @@
                 </b-button>
             </template>
           </b-modal>
-                
+
+          <b-modal
+           v-model="deleteModal"
+           title="Delete Item"
+           centered
+           @ok="delete_confirmation">
+            <h4 style="text-align:center">Anda yakin untuk menghapus?</h4>
+                <template #modal-footer="{ cancel, ok}">
+                <b-button variant="no-otline" style="background-color:#3D322F; color:white" @click="cancel()">
+                    Cancel
+                </b-button>
+                <b-button variant="no-outline" style="background-color:#A53A1D;color:white" @click="ok()">
+                    Yes
+                </b-button>
+                </template>
+          </b-modal>                
         </div>
 
          <div class="overflow-auto" style="margin-top:20px">
@@ -481,6 +500,30 @@ export default {
         }).then(response => {
             this.nama_jabatan= response.data.data.nama_jabatan
            })
+      },
+       delete_confirmation(){
+          console.log(this.delete_temp)
+          var url = this.$api + '/delete-karyawan/'+this.delete_temp.id_karyawan
+         this.$http.delete(url, {
+            headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        }).then(response => {
+            this.error_message= response.data.message
+            this.toastVar='success'
+            this.title= 'Success'
+            this.toast=true
+            this.readData()
+           }).catch(error => {
+            this.error_message = error.response.data.message;
+            this.toastVar='danger'
+            this.title= 'Warning!!'
+            this.toast=true
+            })   
+      },
+      deleteItem(item){
+          this.deleteModal=true
+          this.delete_temp=item
       },
          
     },

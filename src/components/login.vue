@@ -156,11 +156,11 @@ export default {
             }
         }).then(response => {
             localStorage.setItem('roleId',response.data.data.id_jabatan )
-            console.log(response.data.data.id_karyawan)
+            localStorage.setItem('nama', response.data.data.nama_karyawan)
             user={
               role:response.data.data.id_jabatan,
               id:response.data.data.id_karyawan,
-              isLogedin:true
+              isLogedin:true,
             }
             this.$user.set(user);
             this.$router.push({name:'Home Options'}).catch(() => {});

@@ -145,15 +145,19 @@
                 </b-button>
             </template>
           </b-modal>
+
+         
     </body>
 </template>
 <script>
+import moment from 'moment'
 export default {
     data(){
         const now = new Date()
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
         const minDate = new Date(today)
         return{
+            today:today,
             min:minDate,
             addModal:false,
             nama_customer:'',
@@ -169,8 +173,8 @@ export default {
             no_meja_reservasi:'',
             filter:'',
             tanggal_reservasi:'',
-            sesi:[{sesi:1, jam:'Sesi I       |   13.00-15.00    '},
-                    {sesi:2, jam:'Sesi II    |    16.00-19.00    '}],
+            sesi:[{sesi:1, jam:'Lunch      |   11.00-16.00    '},
+                    {sesi:2, jam:'Dinner    |    17.00-21.00    '}],
             meja:[{no_meja:'', status_meja:'', id_reservasi:'', nama_customer:''}],
             customers:[
                 ],
@@ -295,7 +299,7 @@ export default {
               element.status_meja=0
               element.id_reservasi=''
           });
-          var url = this.$api + '/reservasi-by-date/'+ this.tanggal_reservasi + '/' + this.session
+        var url = this.$api + '/reservasi-by-date/'+ this.tanggal_reservasi + '/' + this.session
         this.$http.get(url, {
             headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -309,7 +313,6 @@ export default {
                        meja.id_reservasi=reservasi.id_reservasi
                        meja.id_customer=reservasi.id_customer
                        this.showCustomer(meja)
-                       
                    }
                });
                
@@ -339,12 +342,13 @@ export default {
               }).then(response => {
                 this.error_message = response.data.message;
                 this.addModal=false
+                this.readReservasi()
 
               }).catch(error => {
                 this.error_message = error.response.data.message;
               })          
               
-              this.readData()
+              this.Meja()
       },
       gotoDetail(item){
           localStorage.setItem('reservasiId',item.id_reservasi)
@@ -356,6 +360,11 @@ export default {
     beforeMount(){
         this.readCustomer()
         this.readMeja()
+        var now = moment(String(this.today)).format('YYYY-MM-DD')
+        this.tanggal_reservasi=now
+        this.session=1
+        this.jam='Lunch     |     11.00 - 17.00'
+        this.readReservasi()
          
     },
     computed:{

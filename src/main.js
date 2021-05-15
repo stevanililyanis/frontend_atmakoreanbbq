@@ -10,10 +10,25 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
+import VueMoment from 'vue-moment'
+import moment from 'moment-timezone'
+Vue.use(VueMoment, {
+  moment,
+})
+
+import { jsPDF } from "jspdf";
+Vue.use(jsPDF)
+
+import VueQRCodeComponent from 'vue-qrcode-component'
+Vue.component('qr-code', VueQRCodeComponent)
+
 Vue.config.productionTip = false
 import axios from 'axios'
 Vue.prototype.$http = axios;
 Vue.prototype.$api = 'http://127.0.0.1:8000/api';
+
+
+
 
 
 Vue.config.productionTip = false
@@ -30,6 +45,7 @@ if(localStorage.getItem('isLogedin')==null ||localStorage.getItem('isLogedin')==
 authenticate.then(user=>{
   Vue.prototype.$user.set(user);
   new Vue({
+    
     router,
     render: h => h(App)
   }).$mount('#app')

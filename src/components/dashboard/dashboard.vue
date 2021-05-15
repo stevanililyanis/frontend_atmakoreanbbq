@@ -8,9 +8,10 @@
             
             <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav class="ml-auto" >
-                <b-nav-item-dropdown :text="username" right>
+                <b-nav-item-dropdown :text="`Hi,`+ username " right>
                   <b-dropdown-item to="/profile"><b-icon icon="person-fill"></b-icon> Profile</b-dropdown-item>
-                  <b-dropdown-item to="/jabatan">Dashboard</b-dropdown-item>
+                   <b-dropdown-item v-if="jabatan.nama_jabatan=='Operasional Manager'" to="/jabatan">Dashboard</b-dropdown-item>
+                  <b-dropdown-item v-else-if="jabatan.nama_jabatan=='Chef'" to="/bahan">Dashboard</b-dropdown-item>
                   <b-dropdown-item @click="logout">Logout<b-icon icon="arrow-bar-right" style="margin-left:10px"></b-icon></b-dropdown-item>
                 </b-nav-item-dropdown>
             </b-navbar-nav>
@@ -99,7 +100,7 @@
                         </b-row>
                         </div>
                     </b-nav-item><br> -->
-                     <b-nav-item v-if="jabatan.nama_jabatan=='Operasional Manager'" to="/Bahan" @click="hide">
+                     <b-nav-item v-if="jabatan.nama_jabatan=='Operasional Manager'||jabatan.nama_jabatan=='Chef'" to="/Bahan" @click="hide">
                         <div class="warnaSD">
                         <b-row> 
                         <b-col cols="2">
@@ -155,7 +156,7 @@
 export default {
   data(){
     return{
-      username:localStorage.getItem('email'),
+      username:localStorage.getItem('nama'),
       isLogedin:false,
       jabatan:null
     }
@@ -198,7 +199,8 @@ export default {
                 user={
                   role:"unauthenticated",
                   id:null,
-                  isLogedin:false
+                  isLogedin:false,
+                  nama:null
                 }
                 this.isLogedin=false
                 this.$user.set(user);

@@ -12,6 +12,7 @@ const router = new VueRouter(
   routes:[{
     path: '/',
     name: 'Home',
+    redirect:{name: 'Home Options'},
     meta: {title: 'Atma Korean BBQ'},
     component: importComponent('home'),
     children:[
@@ -44,6 +45,14 @@ const router = new VueRouter(
         
         },
         component:importComponent('options/reservation')
+      },
+      {
+        path:'/pesanan',
+        name:'Pesanan',
+        meta: {title: 'Data Pesanan',
+        
+        },
+        component:importComponent('options/pesanan')
       },
       {
         path:'/reservation-detil',
@@ -144,6 +153,7 @@ router.beforeEach((to, from, next)=>{
   }else if(to.name=="Login" && localStorage.getItem("isLogedin")==1 ){
       next('Home')
   }
+  
   document.title = to.meta.title;
   next();
 });
