@@ -146,6 +146,10 @@
             aria-controls="my-table"
             ></b-pagination>
          </div>
+
+         <b-toast v-model="toast" :title="title" :variant="toastVar" toaster="b-toaster-bottom-center">
+          {{error_message}}
+        </b-toast >
     </body>
 </template>
 <script>
@@ -200,6 +204,11 @@ export default {
                  {key:'remaining_stock'},
                  {key: 'action'},
             ],
+            toast:false,
+            title:'',
+            toastVar:'',
+            error_message:''
+            
             
         }
     },
@@ -301,9 +310,15 @@ export default {
                 }
               }).then(response => {
                 this.error_message = response.data.message;
+                this.toastVar="success"
+                this.title="Success!!"
+                this.toast=true
 
               }).catch(error => {
                 this.error_message = error.response.data.message;
+                this.toastVar="danger"
+                this.title="Warning!!"
+                this.toast=true
               })          
               
               this.readData()
@@ -335,9 +350,15 @@ export default {
                 }
               }).then(response => {
                 this.error_message = response.data.message;
+                this.toastVar="success"
+                this.title="Success!!"
+                this.toast=true
 
               }).catch(error => {
                 this.error_message = error.response.data.message;
+                this.toastVar="danger"
+                this.title="Warning!!"
+                this.toast=true
               })          
               
               this.readData()
@@ -358,9 +379,15 @@ export default {
           })
           .then((response) => {
             this.error_message = response.data.message;
+            this.toastVar="success"
+                this.title="Success!!"
+                this.toast=true
           })
           .catch((error) => {
             this.error_message = error.response.data.message;
+            this.toastVar="danger"
+                this.title="Warning!!"
+                this.toast=true
 
           });
           this.readData()
@@ -375,12 +402,12 @@ export default {
 
     filteredRows() {
         return this.rows.filter(row => {
-        const id_bahan = row.id_bahan.toString().toLowerCase();
-        const nama_bahan = row.nama_bahan.toLowerCase();
-        const searchTerm = this.filter.toLowerCase();
+        const id_bahan = row.id_bahan?.toString().toLowerCase();
+        const nama_bahan = row.nama_bahan?.toLowerCase();
+        const searchTerm = this.filter?.toLowerCase();
 
-        return nama_bahan.includes(searchTerm) ||
-            id_bahan.includes(searchTerm);
+        return nama_bahan?.includes(searchTerm) ||
+            id_bahan?.includes(searchTerm);
     });
     
   },

@@ -25,8 +25,8 @@ Vue.component('qr-code', VueQRCodeComponent)
 Vue.config.productionTip = false
 import axios from 'axios'
 Vue.prototype.$http = axios;
+//Vue.prototype.$api = 'https://api.atmakoreanbbq.me/api';
 Vue.prototype.$api = 'http://127.0.0.1:8000/api';
-
 
 
 

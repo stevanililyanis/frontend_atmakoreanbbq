@@ -20,8 +20,9 @@
                 <b-col cols="8">
                   <p>{{reservasi.id_reservasi}}</p>
                   <p>{{res_date}} </p>
-                  <p><b-badge style="padding: 7px" variant="warning">{{deskripsi_sesi}}</b-badge></p>
-                  <p>{{nama_customer}}</p>
+                  <p><b-badge style="padding: 7px" variant="warning" v-if="reservasi.sesi_reservasi==1">Lunch | 11.00 - 16.00</b-badge>
+                      <b-badge style="padding: 7px" variant="warning" v-else>Dinner | 17.00 - 21.00</b-badge></p>
+                  <p>{{reservasi.nama_customer}}</p>
                   <p>{{reservasi.no_meja}}</p>
                 </b-col>
                 <b-col>
@@ -235,7 +236,7 @@ export default {
     });
 
     let base64Image = this.getBase64Image(qrcode.firstChild.firstChild);
-    
+    doc.text("ATMA KOREAN BBQ",2, 1.5, 'center');
     doc.addImage(base64Image, 'JPG', 1.25, 2, 1.5, 1.5);
     doc.setFontSize(10);
     doc.text(tanggal_cetak, 0.95,4);
@@ -336,7 +337,7 @@ export default {
       this.tanggal_reservasi_baru=this.reservasi.tanggal_reservasi
       this.session=this.reservasi.sesi_reservasi
       this.readReservasi()
-      this.nama_cust_chosen=this.nama_customer
+      this.nama_cust_chosen=this.reservasi.nama_customer
       this.no_meja_selected=this.reservasi.no_meja.toString()
       this.no_meja=this.reservasi.no_meja.toString()
       this.id_customer=this.reservasi.id_customer
@@ -369,19 +370,9 @@ export default {
             }
         }).then(response => {
             this.reservasi=response.data.data[0]
-            if(this.reservasi.sesi_reservasi==1){
-              this.deskripsi_sesi='Lunch | 11.00 - 16.00'
-            }else 
-              this.deskripsi_sesi='Dinner | 17.00 - 21.00'
-            var url = this.$api + '/customer/' + this.reservasi.id_customer
-              this.$http.get(url, {
-                  headers: {
-                  'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-                  }
-              }).then(response => {
-                  this.nama_customer = response.data.data[0].nama_customer  
-                  console.log(this.nama_customer)
-                });
+            this.id_customer = this.reservasi.id_customer;
+            
+           
            })
     },
     checkFormValidity() {

@@ -14,7 +14,7 @@
           <b-card-group deck style="margin-top:20px" >
               <b-card 
                 :title="item.nama_menu"
-                :img-src="`http://127.0.0.1:8000` + item.gambar"
+                :img-src="`https://atmakoreanbbq.me/` + item.gambar"
                 img-top
                 tag="article"
                 img-height="200rem"

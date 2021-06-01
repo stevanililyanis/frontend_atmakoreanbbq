@@ -145,6 +145,10 @@
             aria-controls="my-table"
             ></b-pagination>
          </div>
+
+         <b-toast v-model="toast" :title="title" :variant="toastVar" toaster="b-toaster-bottom-center">
+          {{error_message}}
+        </b-toast >
     </body>
 </template>
 <script>
@@ -208,7 +212,11 @@ export default {
             bahanState:null,
             bahanVariant:'Light',
             tanggal:'',
-            tanggalState:null
+            tanggalState:null,
+            toast:false,
+            title:'',
+            toastVar:'',
+            error_message:''
             
         }
     },
@@ -228,12 +236,13 @@ export default {
       },checkFormValidity() {
         var error=0;
       
-        if(!RegExp(numberOnlyRegex).test(this.harga_bahan)){
+        if(!RegExp(numberOnlyRegex).test(this.harga_bahan)&&this.tipe_riwayat=='Incoming'){
               
               this.harga_feedback= 'Harga haruslah angka'
               this.hargaState = false
               error=+1
           }
+        
 
         if(this.stock.length<1){
             this.stockState = false
@@ -340,9 +349,15 @@ export default {
                 }
               }).then(response => {
                 this.error_message = response.data.message;
+                this.toastVar="success"
+                this.title="Success!!"
+                this.toast=true
 
               }).catch(error => {
                 this.error_message = error.response.data.message;
+                this.toastVar='danger'
+                this.title= 'Warning!!'
+                this.toast=true
               })          
               
               this.readData()
@@ -377,20 +392,29 @@ export default {
                 }
               }).then(response => {
                 this.error_message = response.data.message;
+                this.toastVar="success"
+                this.title="Success!!"
+                this.toast=true
 
               }).catch(error => {
                 this.error_message = error.response.data.message;
+                this.toastVar="danger"
+                this.title="Warning!!"
+                this.toast=true
               })          
               
               this.readData()
       },editData(){
           
+
         let newData = {
-        nama_bahan: this.nama_bahan,
-        unit:this.unit,
+        id_bahan:this.id_bahan,
+        tipe_stock:this.text_riwayat,
+        tanggal : this.tanggal,
+        stock: this.stock,
         harga_bahan:this.harga_bahan
         };
-        var url = this.$api + "/update-bahan/" + this.id_item;
+        var url = this.$api + "/update-history/" + this.id_item;
         this.load = true;
         this.$http
           .put(url, newData, {
@@ -400,9 +424,15 @@ export default {
           })
           .then((response) => {
             this.error_message = response.data.message;
+            this.toastVar="success"
+            this.title="Success!!"
+            this.toast=true
           })
           .catch((error) => {
             this.error_message = error.response.data.message;
+            this.toastVar="danger"
+            this.title="Warning!!"
+            this.toast=true
 
           });
           this.readData()
@@ -449,12 +479,12 @@ export default {
     },
     filteredRows() {
         return this.rows.filter(row => {
-        const id_bahan = row.id_bahan.toString().toLowerCase();
-        const id_history = row.id_history.toLowerCase();
-        const searchTerm = this.filter.toLowerCase();
+        const id_bahan = row.id_bahan?.toString().toLowerCase();
+        const id_history = row.id_history?.toLowerCase();
+        const searchTerm = this.filter?.toLowerCase();
 
-        return id_bahan.includes(searchTerm) ||
-            id_history.includes(searchTerm);
+        return id_bahan?.includes(searchTerm) ||
+            id_history?.includes(searchTerm);
     });
     
   },

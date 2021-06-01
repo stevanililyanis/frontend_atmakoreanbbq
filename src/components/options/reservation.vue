@@ -25,7 +25,7 @@
                     label-for="tanggal_reservasi-input"
                     style="color:#A53A1D;font-weight:bold"
                     >
-                      <b-form-datepicker string v-model="tanggal_reservasi"  :min="min"  locale="id"></b-form-datepicker>
+                      <b-form-datepicker string v-model="tanggal_reservasi"    locale="id"></b-form-datepicker>
 
                 </b-form-group>
                 </b-col>
@@ -298,6 +298,7 @@ export default {
           this.meja.forEach(element => {
               element.status_meja=0
               element.id_reservasi=''
+              element.nama_customer=''
           });
         var url = this.$api + '/reservasi-by-date/'+ this.tanggal_reservasi + '/' + this.session
         this.$http.get(url, {

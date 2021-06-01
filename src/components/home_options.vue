@@ -20,7 +20,7 @@
         </b-card-group>
 
         <b-card-group deck style="margin-top:20px">
-        <b-card v-if="jabatan.nama_jabatan=='Operasional Manager'||jabatan.nama_jabatan=='Kasir'" variant="no-outline" text-variant="grey" class="text-center card1" style="box-shadow: 0 0.7rem 1rem rgba(0, 0, 0, 0.15)">
+        <b-card v-if="jabatan.nama_jabatan=='Operasional Manager'||jabatan.nama_jabatan=='Kasir'" @click="to('Kasir')"  variant="no-outline" text-variant="grey" class="text-center card1" style="box-shadow: 0 0.7rem 1rem rgba(0, 0, 0, 0.15)">
             <img src="../assets/cashier.png" width="40%">
             <b-card-text style="font-weight:bold;font-size:20px; margin-top:20px">KASIR</b-card-text>
         </b-card>

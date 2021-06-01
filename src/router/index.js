@@ -81,6 +81,13 @@ const router = new VueRouter(
        },
         component:importComponent('options/menu-display')
       },
+      {
+        path:'/kasir',
+        name:'Kasir',
+        meta: {title: 'Data Transaksi',
+       },
+        component:importComponent('options/kasir')
+      },
     ]
   },
   
@@ -133,6 +140,36 @@ const router = new VueRouter(
         name: 'History',
         meta: {title:"Data Keluar & Masuk Bahan"},
         component: importComponent('dashboard/history')
+      },
+      {
+        path: '/laporan',
+        name: 'Laporan',
+        meta: {title:"Laporan"},
+        component: importComponent('dashboard/laporan')
+      },
+      {
+        path: '/laporan/stok',
+        name: 'Laporan Stok',
+        meta: {title:"Laporan Stok"},
+        component: importComponent('dashboard/laporan_stok')
+      },
+      {
+        path: '/laporan/penjualan',
+        name: 'Laporan Penjualan',
+        meta: {title:"Laporan Penjualan"},
+        component: importComponent('dashboard/laporan_penjualan')
+      },
+      {
+        path: '/laporan/pendapatan',
+        name: 'Laporan Pendapatan',
+        meta: {title:"Laporan Pendapatan"},
+        component: importComponent('dashboard/laporan_pendapatan')
+      },
+      {
+        path: '/laporan/pengeluaran',
+        name: 'Laporan Pengeluaran',
+        meta: {title:"Laporan Pengeluaran"},
+        component: importComponent('dashboard/laporan_pengeluaran')
       },
     ]
   },

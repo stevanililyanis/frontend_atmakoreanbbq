@@ -126,7 +126,7 @@
                       
                         </div>
                     </b-nav-item><br>
-                    <b-nav-item v-if="jabatan.nama_jabatan=='Operasional Manager'||jabatan.nama_jabatan=='Owner'" to="/UpdateBerita" @click="hide" >
+                    <b-nav-item v-if="jabatan.nama_jabatan=='Operasional Manager'||jabatan.nama_jabatan=='Owner'" to="/laporan" @click="hide" >
                         <div class="warnaSD">
                         <b-row> 
                         <b-col cols="2">
